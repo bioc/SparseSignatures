@@ -1,6 +1,6 @@
 Package: SparseSignatures
-Version: 1.5.0
-Date: 2019-04-22
+Version: 1.5.1
+Date: 2019-10-03
 Title: SparseSignatures
 Authors@R: c(person("Daniele", "Ramazzotti", role=c("cre","aut"),email="daniele.ramazzotti@yahoo.com"),
     person("Avantika", "Lal", role=c("aut")),
@@ -13,6 +13,7 @@ Depends:
     R (>= 3.6),
     NMF
 Imports:
+    BiocGenerics (>= 0.31.6),
     nnlasso,
     nnls,
     parallel,
@@ -26,7 +27,6 @@ Imports:
     ggplot2,
     gridExtra
 Suggests:
-    BiocGenerics,
     BiocStyle,
     testthat,
     knitr,

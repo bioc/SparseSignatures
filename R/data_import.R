@@ -15,6 +15,7 @@
 #' @return A count matrix to extract mutatational signatues
 #' @export import.counts.data
 #' @importFrom data.table data.table as.data.table fread dcast .N
+#' @importFrom BiocGenerics "%in%"
 #' @importFrom Biostrings DNAStringSet complement reverseComplement subseq
 #' @import GenomicRanges
 #' @import IRanges
