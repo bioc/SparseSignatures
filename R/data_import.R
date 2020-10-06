@@ -1,11 +1,13 @@
 #' Import point mutations data to build the count matrix to extract mutatational signatues.
 #'
 #' @examples
-#' data(ssm560_reduced)
-#' library("BSgenome.Hsapiens.1000genomes.hs37d5")
-#' bsg = BSgenome.Hsapiens.1000genomes.hs37d5
-#' data(mutation_categories)
-#' imported_data = import.counts.data(input=ssm560_reduced,bsg=bsg,mutation_categories=mutation_categories)
+### data(ssm560_reduced)
+### library("BSgenome.Hsapiens.1000genomes.hs37d5")
+### bsg = BSgenome.Hsapiens.1000genomes.hs37d5
+### data(mutation_categories)
+### imported_data = import.counts.data(input=ssm560_reduced,bsg=bsg,mutation_categories=mutation_categories)
+#' data(imported_data)
+#' head(imported_data)
 #'
 #' @title import.counts.data
 #' @param input either a data.frame/data.table object or a file with 5 columns: sample name, chromosome, position, ref, alt.
@@ -15,7 +17,6 @@
 #' @return A count matrix to extract mutatational signatues
 #' @export import.counts.data
 #' @importFrom data.table data.table as.data.table fread dcast .N
-#' @importFrom BiocGenerics "%in%"
 #' @importFrom Biostrings DNAStringSet complement reverseComplement subseq
 #' @import GenomicRanges
 #' @import IRanges
