@@ -36,6 +36,7 @@
 #' @export sigAssignmentCV
 #' @import nnlasso
 #' @import nnls
+#' @import RhpcBLASctl
 #' @import parallel
 #'
 "sigAssignmentCV" <- function( x, beta, normalize_counts = TRUE, lambda_values_alpha = c(0.00, 0.01, 0.05, 0.10), cross_validation_entries = 0.01, cross_validation_iterations = 5, cross_validation_repetitions = 50, max_iterations_lasso = 10000, num_processes = Inf, seed = NULL, verbose = TRUE, log_file = "" ) {
@@ -192,6 +193,7 @@
 
         # perform the inference
         res_clusterEvalQ <- clusterEvalQ(parallel,library("nnls"))
+        res_clusterEvalQ <- clusterEvalQ(parallel,library("RhpcBLASctl"))
         res_clusterEvalQ <- clusterEvalQ(parallel,library("nnlasso"))
         clusterExport(parallel,varlist=c("x","beta","normalize_counts","cross_validation_entries"),envir=environment())
         clusterExport(parallel,varlist=c("lambda_values_alpha","cross_validation_iterations","max_iterations_lasso"),envir=environment())
@@ -344,6 +346,7 @@
 #' @export sigAssignmentEvaluation
 #' @import nnlasso
 #' @import nnls
+#' @import RhpcBLASctl
 #' @import parallel
 #'
 "sigAssignmentEvaluation" <- function( x, beta, normalize_counts = TRUE, lambda_values = c(0.01, 0.05, 0.10, 0.20), max_iterations_lasso = 10000, num_processes = Inf, seed = NULL, verbose = TRUE, log_file = "" ) {
@@ -435,6 +438,7 @@
     }
     else {
         res_clusterEvalQ <- clusterEvalQ(parallel,library("nnls"))
+        res_clusterEvalQ <- clusterEvalQ(parallel,library("RhpcBLASctl"))
         res_clusterEvalQ <- clusterEvalQ(parallel,library("nnlasso"))
         clusterExport(parallel,varlist=c("x","beta","normalize_counts","max_iterations_lasso"),envir=environment())
         clusterExport(parallel,c('sigAssignmentLasso','nmfLassoDeconstruction'),envir=environment())
@@ -494,6 +498,7 @@
 #'              beta: matrix of the discovered signatures
 #' @export sigAssignmentLasso
 #' @import nnls
+#' @import RhpcBLASctl
 #' @import nnlasso
 #'
 "sigAssignmentLasso" <- function( x, beta, normalize_counts = TRUE, lambda_rate_alpha = 0.05, max_iterations_lasso = 10000, seed = NULL, verbose = TRUE ) {
@@ -573,7 +578,9 @@
 
         # estimate alpha by Non-Negative Linear Least Squares
         for(j in 1:n) {
+            blas_set_num_threads(1)
             alpha[j,] <- nnls(t(beta),as.vector(x[j,]))$x
+            blas_set_num_threads(blas_get_num_procs()) # reset to default
         }
 
     }
