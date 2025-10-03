@@ -16,7 +16,7 @@
 #' @importFrom Biostrings DNAStringSet complement reverseComplement subseq
 #' @import GenomicRanges
 #' @import IRanges
-#' @import Seqinfo
+#' @import GenomeInfoDb
 #' @importFrom BSgenome getSeq
 #'
 "import.trinucleotides.counts" <- function( data, reference = NULL ) {
@@ -45,7 +45,7 @@
     data <- GRanges(data$chrom,IRanges(start=(data$pos-1),width=3),ref=DNAStringSet(data$ref),alt=DNAStringSet(data$alt),sample=data$sample)
 
     # check that all chromosomes match reference
-    if(length(setdiff(seqnames(data),Seqinfo::seqnames(reference)))>0) {
+    if(length(setdiff(seqnames(data),GenomeInfoDb::seqnames(reference)))>0) {
         warning("Check chromosome names, not all match reference genome.")
     }
 

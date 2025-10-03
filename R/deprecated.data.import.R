@@ -20,7 +20,7 @@
 # @importFrom Biostrings DNAStringSet complement reverseComplement subseq
 # @import GenomicRanges
 # @import IRanges
-# @import Seqinfo
+# @import GenomeInfoDb
 # @import BSgenome.Hsapiens.1000genomes.hs37d5
 # @importFrom BSgenome getSeq
 #
@@ -56,9 +56,9 @@
 #  }
 #  
 #  # check that all chromosomes match bsg
-#  if(length(setdiff(seqnames(inp), Seqinfo::seqnames(bsg)))>0) {
+#  if(length(setdiff(seqnames(inp), GenomeInfoDb::seqnames(bsg)))>0) {
 #        warning(paste0("Check chromosome names -- not all match ", bsg, " object.\n"))
-#        inp[seqnames(inp) %in% Seqinfo::seqnames(bsg)]
+#        inp[seqnames(inp) %in% GenomeInfoDb::seqnames(bsg)]
 #  }
 #
 #  # find context for each mutation
